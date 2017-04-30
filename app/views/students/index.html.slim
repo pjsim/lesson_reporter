@@ -16,4 +16,4 @@ table.table.table-hover
         td
           .progress
             .progress-bar role='progressbar' style="width: #{33 * student.lesson_part}%" aria-valuenow="#{student.lesson_part * 30}" aria-valuemin='0' aria-valuemax='90' = "#{student.lesson_part}/3"
-        td = link_to 'JSON', '#', class: 'btn btn-info btn-sm'
+        td = link_to 'JSON', student_path(student, format: :json), class: 'btn btn-info btn-sm'

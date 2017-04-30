@@ -24,7 +24,7 @@ RSpec.describe StudentsController, type: :controller do
 
     it 'returns the student\'s name and progress in JSON' do
       get :show, params: { id: student.id }
-      student_as_json = { student: { name: student.name, progress: student.progress } }.to_json
+      student_as_json = { student: { name: student.name, progress: { lesson: student.lesson, lesson_part: student.lesson_part } } }.to_json
 
       expect(response.body).to eq student_as_json
     end

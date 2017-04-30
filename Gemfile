@@ -46,6 +46,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rails-controller-testing'
   gem 'capybara'
+  gem 'bullet'
 end
 
 group :development do

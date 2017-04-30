@@ -1,0 +1,23 @@
+h1 Edit Student
+hr
+
+= form_for(@student) do |f|
+  - if @student.errors.any?
+    .alert.alert-danger role='alert'
+      - @student.errors.full_messages.each do |message|
+        li = message
+  .form-group.row
+    label.col-sm-2.col-form-label Name
+    .col-sm-10
+      p.form-control-static = @student.name
+  .form-group.row
+    label.col-sm-2.col-form-label Lesson
+    .col-sm-10 = f.number_field :lesson, class: 'form-control'
+  .form-group.row
+    label.col-sm-2.col-form-label Part
+    .col-sm-10 = f.number_field :lesson_part, class: 'form-control'
+
+  = f.submit class: 'btn btn-primary btn-lg'
+
+hr
+= link_to 'Back', students_path, class: 'btn btn-info'

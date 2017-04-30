@@ -1,12 +1,14 @@
 class Student < ApplicationRecord
-
   validates :name, presence: true
 
-  before_create :assign_to_first_lesson_and_part
+  # A newly created Student will start at lesson 1, part 1 (database defaults)
 
-  private
+  validates :lesson, numericality:
+                       { greater_than_or_equal_to: 1,
+                         less_than_or_equal_to: 100 }
 
-  def assign_to_first_lesson_and_part
-    # TODO: assign lesson 1, part 1 before creation
-  end
+  validates :lesson_part, numericality:
+                       { greater_than_or_equal_to: 1,
+                         less_than_or_equal_to: 3 }
+
 end

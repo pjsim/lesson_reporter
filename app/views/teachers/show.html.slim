@@ -1,0 +1,19 @@
+h1.text-center Student Progress Report
+table.table.table-hover
+  thead
+    tr
+      th #
+      th Name
+      th Lesson #
+      th Progress in Lesson
+      th
+  tbody
+    - @teacher.students.each do |student|
+      tr
+        th scope='row' = student.id
+        td = student.name
+        td = student.lesson
+        td = render 'shared/lesson_progress', part: student.lesson_part
+        td
+          => link_to 'JSON', student_path(student, format: :json), class: 'btn btn-success btn-sm'
+          = link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm'

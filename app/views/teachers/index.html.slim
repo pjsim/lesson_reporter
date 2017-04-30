@@ -14,4 +14,4 @@ table.table.table-hover
         td = teacher.name
         td = teacher.students&.count
         td = teacher.students&.maximum :lesson
-        td = link_to 'Report', teacher_path(teacher, format: :json), class: 'btn btn-success btn-sm'
+        td = link_to 'Report', teacher_path(teacher), class: 'btn btn-success btn-sm'

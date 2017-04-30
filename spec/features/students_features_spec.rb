@@ -13,7 +13,14 @@ end
 
 feature 'See a student\'s progress in JSON format' do
   given!(:student) { Student.create! name: Faker::Name.name }
-  given!(:student_as_json) { { student: { name: student.name, progress: { lesson: student.lesson, lesson_part: student.lesson_part } } }.to_json }
+  given!(:student_as_json) do
+    {
+      student: {
+        name: student.name,
+        progress: { lesson: student.lesson, lesson_part: student.lesson_part }
+      }
+    }.to_json
+  end
 
   scenario 'from the students page' do
     visit students_path

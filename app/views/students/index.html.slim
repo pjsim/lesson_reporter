@@ -6,6 +6,7 @@ table.table.table-hover
       th Name
       th Lesson #
       th Progress in Lesson
+      th Teacher
       th
   tbody
     - @students.each do |student|
@@ -14,6 +15,7 @@ table.table.table-hover
         td = student.name
         td = student.lesson
         td = render 'shared/lesson_progress', part: student.lesson_part
+        td = student.teacher&.name
         td
           => link_to 'JSON', student_path(student, format: :json), class: 'btn btn-success btn-sm'
           = link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm'

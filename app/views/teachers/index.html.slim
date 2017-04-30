@@ -1,0 +1,17 @@
+h1.text-center Teachers
+table.table.table-hover
+  thead
+    tr
+      th #
+      th Name
+      th Students
+      th Furthest Lesson
+      th
+  tbody
+    - @teachers.each do |teacher|
+      tr
+        th scope='row' = teacher.id
+        td = teacher.name
+        td = teacher.students&.count
+        td = teacher.students&.maximum :lesson
+        td = link_to 'Report', teacher_path(teacher, format: :json), class: 'btn btn-success btn-sm'

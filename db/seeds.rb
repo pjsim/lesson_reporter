@@ -6,6 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-5.times do
-  Student.create! name: Faker::Name.name, lesson: rand(1..101), lesson_part: rand(1..3)
+
+teachers = Teacher.transaction do
+  names = []
+  5.times { names << { name: Faker::Name.name } }
+  Teacher.create!(names)
+end
+
+Student.transaction do
+  30.times do
+    Student.create! name: Faker::Name.name, lesson: rand(1..101), lesson_part: rand(1..3), teacher: teachers.sample
+  end
 end

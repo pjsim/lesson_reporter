@@ -15,11 +15,12 @@ class StudentsController < ApplicationController
     }
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @student.update(student_params)
-      redirect_to students_path, notice: "#{@student.name}'s progression successfully update."
+      redirect_to students_path, notice: "#{@student.name}'s progression was successfully updated."
     else
       render :edit
     end

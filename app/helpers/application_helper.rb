@@ -1,4 +1,5 @@
 module ApplicationHelper
+  # Convert an incoming flash type to a class name a bootstrap alert can understand
   def bootstrap_class_for(flash_type)
     case flash_type
     when 'success'

@@ -42,4 +42,9 @@ RSpec.describe Student, type: :model do
   it 'is invalid with a lesson part more than 3' do
     expect(Student.new(name: 'Mark Smith', lesson: 1, lesson_part: 4)).to be_invalid
   end
+
+  it 'can belong to a teacher' do
+    s = Student.reflect_on_association(:teacher)
+    expect(s.macro).to eq :belongs_to
+  end
 end

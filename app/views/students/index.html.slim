@@ -8,7 +8,7 @@ table.table.table-hover
       th Progress in Lesson
       th
   tbody
-    - @students.all.each do |student|
+    - @students.each do |student|
       tr
         th scope='row' = student.id
         td = student.name

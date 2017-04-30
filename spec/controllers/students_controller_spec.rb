@@ -10,10 +10,23 @@ RSpec.describe StudentsController, type: :controller do
   end
 
   describe "GET #show" do
-    it "returns http success" do
-      get :show
+    let(:student) { Student.create!(name: Faker::Name.name)}
+
+    it 'returns http success with a valid student id in params' do
+      get :show, params: { id: student.id }
       expect(response).to have_http_status(:success)
     end
-  end
 
+    it 'returns 404 with an invalid student id in params' do
+      get :show, params: { id: 2000 }
+      expect(response).to have_http_status(404)
+    end
+
+    it 'returns the student\'s name and progress in JSON' do
+      get :show, params: { id: student.id }
+      student_as_json = { student: { name: student.name, progress: student.progress } }.to_json
+
+      expect(response.body).to eq student_as_json
+    end
+  end
 end

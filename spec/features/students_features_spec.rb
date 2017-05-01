@@ -46,7 +46,7 @@ feature 'Update a student\'s progression' do
   scenario 'with valid inputs' do
     visit students_path
     click_link 'Edit', match: :first
-    fill_in 'student[lesson]', with: 40
+    fill_in 'student[lesson_part]', with: 2
     click_button 'Update Student'
     expect(page).to have_content("#{student.name}'s progression was successfully updated.")
   end
@@ -57,5 +57,13 @@ feature 'Update a student\'s progression' do
     fill_in 'student[lesson]', with: 400
     click_button 'Update Student'
     expect(page).to have_content('Lesson must be less than or equal to 100')
+  end
+
+  scenario 'with non sequential inputs' do
+    visit students_path
+    click_link 'Edit', match: :first
+    fill_in 'student[lesson]', with: 2
+    click_button 'Update Student'
+    expect(page).to have_content('Student can only progress to lesson 1, part 2')
   end
 end

@@ -18,4 +18,4 @@ table.table.table-hover
         td = student.teacher&.name
         td
           => link_to 'JSON', student_path(student, format: :json), class: 'btn btn-success btn-sm'
-          = link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm'
+          => link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm'

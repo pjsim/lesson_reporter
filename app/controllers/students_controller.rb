@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[show edit update]
+  before_action :set_student, only: %i[show edit update advance]
 
   def index
     @students = Student.includes :teacher
@@ -23,6 +23,14 @@ class StudentsController < ApplicationController
       redirect_to students_path, notice: "#{@student.name}'s progression was successfully updated."
     else
       render :edit
+    end
+  end
+
+  def advance
+    if @student.advance!
+      redirect_to teacher_path(@student.teacher), notice: "#{@student.name} has been advanced to lesson #{@student.lesson}, part #{@student.lesson_part}"
+    else
+      redirect_to teacher_path(@student.teacher), alert: "There was an issue advancing this student"
     end
   end
 

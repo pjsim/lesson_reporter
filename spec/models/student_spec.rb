@@ -47,4 +47,46 @@ RSpec.describe Student, type: :model do
     s = Student.reflect_on_association(:teacher)
     expect(s.macro).to eq :belongs_to
   end
+
+  it 'can tell if it can still progress through the lessons' do
+    expect(Student.new(name: 'Mark Smith').can_progress?).to eq true
+  end
+
+  it 'can tell when it can progress no further' do
+    expect(Student.new(name: 'Mark Smith', lesson: 100, lesson_part: 3).can_progress?).to eq false
+  end
+
+  it 'can assign itself to the next sequential lesson' do
+    student = Student.new(name: 'Mark Smith', lesson: 1, lesson_part: 3)
+    student.advance
+
+    expect(student.lesson).to eq 2
+    expect(student.lesson_part).to eq 1
+    expect(student.persisted?).to eq false
+  end
+
+  it 'can update itself to the next sequential lesson' do
+    student = Student.new(name: 'Mark Smith', lesson: 1, lesson_part: 3)
+    student.advance!
+
+    expect(student.lesson).to eq 2
+    expect(student.lesson_part).to eq 1
+    expect(student.persisted?).to eq true
+  end
+
+  it 'is invalid if updating the lesson and part is not sequential' do
+    student = Student.create(name: 'Mark Smith', lesson: 1, lesson_part: 3)
+    student.lesson = 3
+    student.lesson_part = 1
+
+    expect(student).to be_invalid
+  end
+
+  it 'is valid if updating the lesson and part is sequential' do
+    student = Student.create(name: 'Mark Smith', lesson: 1, lesson_part: 3)
+    student.lesson = 2
+    student.lesson_part = 1
+
+    expect(student).to be_valid
+  end
 end

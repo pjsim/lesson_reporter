@@ -45,16 +45,16 @@ RSpec.describe StudentsController, type: :controller do
   describe 'put #update' do
     context 'with valid params' do
       it 'updates the requested student' do
-        student = Student.create! name: Faker::Name.name
-        put :update, params: { id: student.to_param, student: { lesson: 2, lesson_part: 2 } }
+        student = Student.create! name: Faker::Name.name, lesson: 1, lesson_part: 3
+        put :update, params: { id: student.to_param, student: { lesson: 2, lesson_part: 1 } }
         student.reload
         expect(student.lesson).to eq 2
-        expect(student.lesson_part).to eq 2
+        expect(student.lesson_part).to eq 1
       end
 
       it 'redirects to students' do
         student = Student.create! name: Faker::Name.name
-        put :update, params: { id: student.to_param, student: { lesson: 2, lesson_part: 2 } }
+        put :update, params: { id: student.to_param, student: { lesson: 1, lesson_part: 2 } }
         expect(response).to redirect_to(students_path)
       end
     end

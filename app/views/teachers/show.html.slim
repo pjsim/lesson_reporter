@@ -1,4 +1,7 @@
-h1.text-center Student Progress Report
+.text-center
+  h1 Student Progress Report
+  h4 = "Teacher: #{@teacher.name}"
+  br
 table.table.table-hover
   thead
     tr
@@ -16,4 +19,4 @@ table.table.table-hover
         td = render 'shared/lesson_progress', part: student.lesson_part
         td
           => link_to 'JSON', student_path(student, format: :json), class: 'btn btn-success btn-sm'
-          = link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm'
+          = link_to 'Advance', advance_student_path(student), method: :patch, class: 'btn btn-primary btn-sm'

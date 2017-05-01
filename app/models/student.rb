@@ -13,7 +13,7 @@ class Student < ApplicationRecord
                        { greater_than_or_equal_to: 1,
                          less_than_or_equal_to: 3 }
 
-  # Validate the lessons are only updated sequentially (if not using the advance! method)
+  # Validate the lessons are only updated sequentially (if not using the advance method)
   validate :lesson_and_parts_update_sequentially, on: :update
 
   # Student is able to progress to the next lesson unless they have reached lesson 100, part 3
@@ -34,26 +34,29 @@ class Student < ApplicationRecord
 
   private
 
+  # Pass validation only if the changed progress matches what the advance method would have returned
   def lesson_and_parts_update_sequentially
-    # If any changes are made to lesson or lesson_part, assign variables to them
-    previous_lesson = changes[:lesson]&.[] 0
-    previous_part = changes[:lesson_part]&.[] 0
+    advanced_progress = use_advance_on_unchanged_progress
+    return if changed_progress_matches? advanced_progress
+    errors.add :student, "can only progress to lesson #{advanced_progress['lesson']}, part #{advanced_progress['lesson_part']}"
+  end
 
-    # Duplicate the student to what it was before any changes
+  # Returns the proper lesson progress using advance with progress from before the change
+  def use_advance_on_unchanged_progress
     previous_student = dup
-    previous_student.lesson = previous_lesson if previous_lesson
-    previous_student.lesson_part = previous_part if previous_part
+    previous_student.assign_attributes(lesson: lesson_was, lesson_part: lesson_part_was)
+    previous_student.advance.attributes.slice('lesson', 'lesson_part')
+  end
 
-    # Progress the duplicate to the next sequential lesson and compare to the changes proposed
-    advanced_student = previous_student.advance
-    if !((previous_lesson || previous_part) && self.attributes.slice("lesson", "lesson_part") == advanced_student.attributes.slice("lesson", "lesson_part"))
-      errors.add :student, "can only progress to lesson #{advanced_student.lesson}, part #{advanced_student.lesson_part}"
-    end
+  # Check the students progress attributes against another progress hash
+  def changed_progress_matches? advanced_progress
+    student_progress = attributes.slice('lesson', 'lesson_part')
+    student_progress == advanced_progress
   end
 
   # Increment the lesson if on part 3 of a lesson, unless at lesson 100
   def next_lesson
-    (lesson < 100 && lesson_part == 3) ? lesson + 1 : lesson
+    lesson < 100 && lesson_part == 3 ? lesson + 1 : lesson
   end
 
   # Increment the lesson part unless on part 3

@@ -36,18 +36,18 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Template gems
-gem 'slim'
 gem 'bootstrap'
+gem 'slim'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'rspec-rails'
-  gem 'rails-controller-testing'
-  gem 'capybara'
-  gem 'rubocop' # Ruby style checker
-  gem 'faker' # Used to fake names for testing and seeding
   gem 'bullet' # Checks for when eager loading should be used
+  gem 'capybara'
+  gem 'faker' # Used to fake names for testing and seeding
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
+  gem 'rubocop' # Ruby style checker
 end
 
 group :development do

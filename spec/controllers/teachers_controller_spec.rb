@@ -10,7 +10,6 @@ RSpec.describe TeachersController, type: :controller do
 
   describe 'GET #show' do
     let(:teacher) { Teacher.create!(name: Faker::Name.name) }
-    let(:student) { Student.create!(name: Faker::Name.name, teacher: teacher) }
 
     it 'returns http success with a valid teacher id in params' do
       get :show, params: { id: teacher.to_param }

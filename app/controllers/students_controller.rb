@@ -28,9 +28,11 @@ class StudentsController < ApplicationController
 
   def advance
     if @student.advance!
-      redirect_to teacher_path(@student.teacher), notice: "#{@student.name} has been advanced to lesson #{@student.lesson}, part #{@student.lesson_part}"
+      redirect_to teacher_path(@student.teacher),
+                  notice: "#{@student.name} has been advanced to lesson #{@student.lesson}, part #{@student.lesson_part}"
     else
-      redirect_to teacher_path(@student.teacher), alert: "There was an issue advancing this student"
+      redirect_to teacher_path(@student.teacher),
+                  alert: 'This student cannot advance further'
     end
   end
 
